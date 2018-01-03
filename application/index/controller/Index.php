@@ -22,4 +22,10 @@ class Index extends Controller
         $this->assign('list', $list);
         return $this->fetch('orderDetails');
     }
+
+    public function todayOrder()
+    {
+        return $this->fetch('todayOrder');
+    }
+    
 }
