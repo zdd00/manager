@@ -12,17 +12,25 @@
 <div class="main">
     <div class="left-menu">
         <ul>
-            <li class="active">营养套餐<span class="num-price"></span></li>
-            <li>酒水饮料</li>
+            {volist name="list" id="vo"}
+            {eq name="i" value="1"}
+            <li class="active">{$key}</li>
+            {else/}
+            <li>{$key}</li>
+            {/eq}
+            {/volist}
         </ul>
     </div>
     <div class="con">
-        <div class="right-con con-active">
+        {volist name="list" id="vo"}
+        <div class="right-con {eq name="i" value="1"}con-active{/eq}">
             <ul>
+                {volist name="vo" id="v"}
                 <li>
                     <div class="menu-img"><img src="/static/images/pic.png" width="55" height="55"/></div>
                     <div class="menu-txt">
-                        <h4>宫保鸡丁</h4>
+                        <h4>{$v.product_name}</h4>
+                        <b>属于:{$v.type_name}</b>
                         <div class="btn">
                             <button class="minus">
                                 <strong></strong>
@@ -35,45 +43,10 @@
                         </div>
                     </div>
                 </li>
+                {/volist}
             </ul>
         </div>
-
-        <div class="right-con">
-            <ul>
-                <li>
-                    <div class="menu-img"><img src="/static/images/pic.png" width="55" height="55"/></div>
-                    <div class="menu-txt">
-                        <h4>京酱肉丝</h4>
-                        <div class="btn">
-                            <button class="minus">
-                                <strong></strong>
-                            </button>
-                            <i>0</i>
-                            <button class="add">
-                                <strong></strong>
-                            </button>
-                            <i class="price">25</i>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="menu-img"><img src="/static/images/pic.png" width="55" height="55"/></div>
-                    <div class="menu-txt">
-                        <h4>京酱肉丝</h4>
-                        <div class="btn">
-                            <button class="minus">
-                                <strong></strong>
-                            </button>
-                            <i>0</i>
-                            <button class="add">
-                                <strong></strong>
-                            </button>
-                            <i class="price">25</i>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        {/volist}
     </div>
     <div class="footer">
         <div class="left">查看菜单
@@ -91,20 +64,6 @@
         $(window).resize(function () {
             resizeH();
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

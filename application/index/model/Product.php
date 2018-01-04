@@ -9,6 +9,6 @@ class Product extends Model
     function getList()
     {
         $list = parent::select();
-        var_dump($list->toArray());
+        return array_group_by($list,'type_name');;
     }
 }

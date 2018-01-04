@@ -32,7 +32,9 @@ class Index extends Controller
     public function order()
     {
         $product=new Product();
-        var_dump($product->getList());
+        $array_list=$product->getList();
+//        var_dump($array_list);
+        $this->assign('list',$array_list);
         return $this->fetch('order');
     }
     
