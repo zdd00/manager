@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc6a7d5a-f8cd-475b-a532-0b5a476cb962" name="默认的" comment="默认的">
-      <change beforePath="" afterPath="$PROJECT_DIR$/public/static/js/jquery.min.js" />
+    <list default="true" id="fc6a7d5a-f8cd-475b-a532-0b5a476cb962" name="默认的" comment="2018/1/4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/application/common.php" afterPath="$PROJECT_DIR$/application/common.php" />
-      <change beforePath="$PROJECT_DIR$/application/index/controller/Index.php" afterPath="$PROJECT_DIR$/application/index/controller/Index.php" />
-      <change beforePath="$PROJECT_DIR$/application/index/model/Product.php" afterPath="$PROJECT_DIR$/application/index/model/Product.php" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/index.html" afterPath="$PROJECT_DIR$/application/index/view/index/index.html" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/order.html" afterPath="$PROJECT_DIR$/application/index/view/index/order.html" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/orderDetails.html" afterPath="$PROJECT_DIR$/application/index/view/index/orderDetails.html" />
-      <change beforePath="$PROJECT_DIR$/application/index/view/index/todayOrder.html" afterPath="$PROJECT_DIR$/application/index/view/index/todayOrder.html" />
     </list>
     <ignored path="manager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -260,12 +252,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1515036878914</updated>
-      <workItem from="1515073026106" duration="3992000" />
+      <workItem from="1515073026106" duration="4120000" />
     </task>
+    <task id="LOCAL-00001" summary="2018/1/4">
+      <created>1515077659164</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1515077659164</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3992000" />
+    <option name="totallyTimeSpent" value="4120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -304,6 +304,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="2018/1/4" />
+    <option name="LAST_COMMIT_MESSAGE" value="2018/1/4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -398,6 +402,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="20" column="46" lean-forward="false" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -455,6 +460,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
