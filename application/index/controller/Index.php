@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\index\model\Order;
+use app\index\model\Product;
 use think\Controller;
 
 class Index extends Controller
@@ -26,6 +27,13 @@ class Index extends Controller
     public function todayOrder()
     {
         return $this->fetch('todayOrder');
+    }
+
+    public function order()
+    {
+        $product=new Product();
+        var_dump($product->getList());
+        return $this->fetch('order');
     }
     
 }

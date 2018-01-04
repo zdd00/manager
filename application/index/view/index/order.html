@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <title>无标题文档</title>
+    {load href="/static/css/order.css" /}
+
+</head>
+
+<body>
+<div class="main">
+    <div class="left-menu">
+        <ul>
+            <li class="active">营养套餐<span class="num-price"></span></li>
+            <li>酒水饮料</li>
+        </ul>
+    </div>
+    <div class="con">
+        <div class="right-con con-active">
+            <ul>
+                <li>
+                    <div class="menu-img"><img src="/static/images/pic.png" width="55" height="55"/></div>
+                    <div class="menu-txt">
+                        <h4>宫保鸡丁</h4>
+                        <div class="btn">
+                            <button class="minus">
+                                <strong></strong>
+                            </button>
+                            <i>0</i>
+                            <button class="add">
+                                <strong></strong>
+                            </button>
+                            <i class="price">25</i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="right-con">
+            <ul>
+                <li>
+                    <div class="menu-img"><img src="/static/images/pic.png" width="55" height="55"/></div>
+                    <div class="menu-txt">
+                        <h4>京酱肉丝</h4>
+                        <div class="btn">
+                            <button class="minus">
+                                <strong></strong>
+                            </button>
+                            <i>0</i>
+                            <button class="add">
+                                <strong></strong>
+                            </button>
+                            <i class="price">25</i>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="menu-img"><img src="/static/images/pic.png" width="55" height="55"/></div>
+                    <div class="menu-txt">
+                        <h4>京酱肉丝</h4>
+                        <div class="btn">
+                            <button class="minus">
+                                <strong></strong>
+                            </button>
+                            <i>0</i>
+                            <button class="add">
+                                <strong></strong>
+                            </button>
+                            <i class="price">25</i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="left">查看菜单
+        </div>
+        <div class="right">
+            <a id="btnselect" class="xhlbtn" href="javascript:void(0)">提交菜单</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        resizeH();
+        $(window).resize(function () {
+            resizeH();
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //加的效果
+        $(".add").click(function () {
+            $(this).prevAll().css("display", "inline-block");
+            var n = $(this).prev().text();
+            var num = parseInt(n) + 1;
+            if (num == 0) {
+                return;
+            }
+            $(this).prev().text(num);
+        });
+        //减的效果
+        $(".minus").click(function () {
+            var n = $(this).next().text();
+            var num = parseInt(n) - 1;
+            $(this).next().text(num);//减1
+            //如果数量小于或等于0则隐藏减号和数量
+            if (num <= 0) {
+                $(this).next().css("display", "none");
+                $(this).css("display", "none");
+                return false;
+            }
+        });
+
+        function resizeH() {
+            var height = window.innerHeight - 45;
+            $('.right-con').height(height);
+            $('.left-menu').height(height);
+        }
+
+        //选项卡
+        $(".con>div").hide();
+        $(".con>div:eq(0)").show();
+
+        $(".left-menu li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            var n = $(".left-menu li").index(this);
+            $(".left-menu li").index(this);
+            $(".con>div").hide();
+            $(".con>div:eq(" + n + ")").show();
+        });
+    });
+</script>
+
+</body>
+</html>
