@@ -57,13 +57,15 @@
     </div>
 </div>
 
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+{load href="/static/js/jquery.min.js" /}
 <script type="text/javascript">
     $(function () {
         resizeH();
         $(window).resize(function () {
             resizeH();
         });
+
+
 
 
 
@@ -108,6 +110,12 @@
             $(".con>div").hide();
             $(".con>div:eq(" + n + ")").show();
         });
+
+        function getOrder(){
+            $('.con').on('click',function(){
+
+            })
+        }
     });
 </script>
 
