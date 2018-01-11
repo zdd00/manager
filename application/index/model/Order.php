@@ -1,14 +1,19 @@
 <?php
+
 namespace app\index\model;
 
 
+use think\exception\DbException;
 use think\Model;
 
 class Order extends Model
 {
     public function getList($where, $pageSize)
     {
-        return $this->where($where)->paginate($pageSize);
+        try {
+            return $this->where($where)->paginate($pageSize);
+        } catch (DbException $e) {
+        }
     }
 
     /**
@@ -18,7 +23,7 @@ class Order extends Model
      * @return false|\PDOStatement|string|\think\Collection
      */
 
-    public function orderList($orderId = '', $userId = null, $provider = '')
+    public function orderList($orderId = '', $userId = '', $provider = '')
     {
         $where = [];
         if ($orderId != '') $where['a.order_id'] = $orderId;
