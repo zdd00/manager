@@ -4,7 +4,7 @@ namespace app\index\model;
 
 use think\Model;
 
-class Order extends Model
+class Provider extends Model
 {
     /**
      * 总数

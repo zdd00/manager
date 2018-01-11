@@ -1,9 +1,10 @@
 <?php
 namespace app\index\model;
 
+
 use think\Model;
 
-class Product extends Model
+class Admin extends Model
 {
 
 }

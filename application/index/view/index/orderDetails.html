@@ -32,6 +32,35 @@
     </div>
 </nav>
 <div class="container">
+    <form id="form" class="form-inline" style="margin-bottom: 10px;">
+        <input type="hidden" name="orderId" value="{$Request.param.orderId}"/>
+        <div class="form-group">
+            <label>选择店</label>
+            <select class="form-control" name="userId" title="选择店" id="userId">
+                <option value="">--选择店--</option>
+                {volist name="admin" id="vo"}
+                {if condition="$vo['id'] eq $Request.param.userId"}
+                <option value="{$vo.id}" selected>{$vo.username}</option>
+                {else /}
+                <option value="{$vo.id}">{$vo.username}</option>
+                {/if}
+                {/volist}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>选择供货人</label>
+            <select class="form-control" name="provider" title="选择供货人" id="provider">
+                <option value="">--选择供货人--</option>
+                {volist name="provider" id="vo"}
+                {if condition="$vo['id'] eq $Request.param.provider"}
+                <option value="{$vo.id}" selected>{$vo.provider}</option>
+                {else /}
+                <option value="{$vo.id}">{$vo.provider}</option>
+                {/if}
+                {/volist}
+            </select>
+        </div>
+    </form>
     <table class="table table-responsive table-bordered table-condensed table-striped">
         <tr>
             <th>菜名</th>
@@ -44,7 +73,19 @@
         </tr>
         {/volist}
     </table>
-    <div id="page"></div>
+    <div id="page">
+        {$list->render()}
+    </div>
 </div>
+<script>
+    $('#userId').on('change', function () {
+        $('#provider').val('');
+        $('#form').submit();
+    });
+    $('#provider').on('change', function () {
+        $('#userId').val('');
+        $('#form').submit();
+    });
+</script>
 </body>
 </html>

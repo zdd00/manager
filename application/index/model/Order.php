@@ -6,48 +6,26 @@ use think\Model;
 
 class Order extends Model
 {
-    /**
-     * 总数
-     * @param string $field
-     * @return int|string
-     */
-    public function count($field = '*')
+    public function getList($where, $pageSize)
     {
-        return parent::count($field);
+        return $this->where($where)->paginate($pageSize);
     }
 
     /**
-     * 获取订单总数
-     * @param null $where
-     * @return int
-     */
-    public function getCount($where = null)
-    {
-        return count($this->where($where)->group('create_time')->order('create_time desc')->select());
-    }
-
-    /**
-     * 获取订单列表
-     * @param null $where
-     * @param int $page
-     * @param int $pageSize
+     * 获取订单菜品列表
+     * @param string $orderId
+     * @param null $userId
      * @return false|\PDOStatement|string|\think\Collection
      */
 
-    public function getList($where = null, $pageSize = 10)
+    public function orderList($orderId = '', $userId = null, $provider = '')
     {
-        if (!is_numeric($pageSize)) {
-            $pageSize = 10;
-        }
-        return $this->where($where)->group('create_time')->order('create_time desc')->paginate($pageSize);
-    }
+        $where = [];
+        if ($orderId != '') $where['a.order_id'] = $orderId;
+        if ($userId != '') $where['b.user_id'] = $userId;
+        if ($provider != '') $where['c.product_provider'] = $provider;
+        return $this->alias('a')->where($where)->join('xzg_order_details b', 'a.order_id=b.order_id')->join('xzg_product c', 'b.product_id=c.id')->field('b.order_id,b.order_number,c.product_name,c.product_provider');
 
-    /**
-     * 获取订单详情
-     * @return array
-     */
-    public function getOrder($orderId = 0)
-    {
-        return $this->where('order_id', $orderId)->select();
     }
 }
+

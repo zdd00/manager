@@ -37,11 +37,13 @@
     </p>
     <table class="table table-responsive table-bordered table-condensed table-striped">
         <tr>
+            <th>订单</th>
             <th>订单日期</th>
             <th>操作</th>
         </tr>
         {volist name="list" id="vo"}
         <tr>
+            <td>{$vo.order_id}</td>
             <td>{$vo.create_time}</td>
             <td><a href="index/orderDetails?orderId={$vo.order_id}">详情</a></td>
         </tr>
