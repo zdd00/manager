@@ -11,9 +11,16 @@ use app\index\model\Type;
 use think\Controller;
 use think\exception\DbException;
 use think\Paginator;
+use think\response\Json;
 
 class Index extends Controller
 {
+    /**
+     * 订单列表
+     * @param null $where
+     * @param int $pageSize
+     * @return mixed
+     */
     public function index($where = null, $pageSize = 10)
     {
         $order = new Order();
@@ -47,6 +54,23 @@ class Index extends Controller
         return $this->fetch('orderDetails');
     }
 
+    public function order()
+    {
+        return $this->fetch('order');
+    }
+
+    public function todayOrder()
+    {
+        return $this->fetch('todayOrder');
+    }
+
+    /**
+     * 菜品管理
+     * @param string $type
+     * @param string $provider
+     * @param string $pageSize
+     * @return mixed
+     */
     public function product($type = '', $provider = '', $pageSize = '20')
     {
         $product = new Product();
@@ -60,9 +84,40 @@ class Index extends Controller
         return $this->fetch('product');
     }
 
-
-    public function todayOrder()
+    public function productEdit($data)
     {
-        return $this->fetch('todayOrder');
+        $product = new Product();
+        return $product->edit($data);
+    }
+
+    public function productDel($data)
+    {
+        $product = new Product();
+        return $product->del($data);
+    }
+
+    /**
+     * 供应人管理
+     * @param string $pageSize
+     * @return mixed
+     */
+    public function provider($pageSize = '20')
+    {
+        $product = new Provider();
+        $list = $product->providerList()->paginate($pageSize, false, ['query' => request()->param()]);
+        $this->assign('list', $list);
+        return $this->fetch('provider');
+    }
+
+    public function providerEdit($data)
+    {
+        $product = new Provider();
+        return $product->edit($data);
+    }
+
+    public function providerDel($data)
+    {
+        $product = new Provider();
+        return $product->del($data);
     }
 }
