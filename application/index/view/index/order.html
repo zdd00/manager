@@ -23,22 +23,25 @@
     </div>
     <div class="con">
         {volist name="list" id="vo"}
-        <div class="right-con {eq name="i" value="1"}con-active{/eq}">
+        <div class="right-con {eq name='i' value='1'}con-active{/eq}">
             <ul>
                 {volist name="vo" id="v"}
                 <li>
                     <div class="menu-img"><img src="/static/images/pic.png" width="55" height="55"/></div>
                     <div class="menu-txt">
-                        <h4>{$v.product_name}</h4>
-                        <b>属于:{$v.type_name}</b>
+                        <h3>{$v.product_name}</h3>
+                        <span>供应人:{$v.provider}</span>
                         <div class="btn">
-                            <button class="minus">
+                            <button class="minus" type="button">
                                 <strong></strong>
                             </button>
                             <i>0</i>
-                            <button class="add">
+                            <button class="add" type="button">
                                 <strong></strong>
                             </button>
+                            <input class="num" type="hidden" name="order_number[]" value="">
+                            <input type="hidden" name="product_id[]" value="{$v.id}">
+                            <input type="hidden" name="provider_id[]" value="{$v.provider_id}">
                             <i class="price">25</i>
                         </div>
                     </div>
@@ -66,10 +69,6 @@
         });
 
 
-
-
-
-
         //加的效果
         $(".add").click(function () {
             $(this).prevAll().css("display", "inline-block");
@@ -79,12 +78,14 @@
                 return;
             }
             $(this).prev().text(num);
+            $(this).closest('.btn').find('.num').val(num);
         });
         //减的效果
         $(".minus").click(function () {
             var n = $(this).next().text();
             var num = parseInt(n) - 1;
             $(this).next().text(num);//减1
+            $(this).closest('.btn').find('.num').val(num);
             //如果数量小于或等于0则隐藏减号和数量
             if (num <= 0) {
                 $(this).next().css("display", "none");
@@ -111,12 +112,36 @@
             $(".con>div:eq(" + n + ")").show();
         });
 
-        function getOrder(){
-            $('.con').on('click',function(){
+        function getOrder() {
+            $('.con').on('click', function () {
 
             })
         }
     });
+
+    //模拟form提交
+    //<form action="orderForm" method="post" id="form">
+    $('#btnselect').on('click', function () {
+
+        var body = $(document.body),
+            form = $("<form method='post'></form>"),
+            input, url = 'orderForm';
+        form.attr({"action": url});
+        $('.menu-txt').each(function (index, val) {
+            if ($(val).find('.num').val()) {
+                $(val).find('input').each(function (key, value) {
+                    input = $("<input type='hidden'>");
+                    input.attr({"name": $(value).attr('name')});
+                    input.val($(value).val());
+                    form.append(input);
+                })
+            }
+        });
+        form.appendTo(document.body);
+
+        form.submit();
+        document.body.removeChild(form[0]);
+    })
 </script>
 
 </body>

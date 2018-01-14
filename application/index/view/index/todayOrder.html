@@ -33,18 +33,23 @@
 </nav>
 <div class="container">
     <p>
-        <a href="order" class="btn btn-primary">添加</a>
+        <a href="order" class="btn btn-primary">添加/修改</a>
     </p>
     <table class="table table-responsive table-bordered table-condensed table-striped">
         <tr>
-            <th>订单日期</th>
-            <th>操作</th>
+            <th>菜名</th>
+            <th>数量</th>
         </tr>
+        {volist name="list" id="vo"}
         <tr>
-            <td>1</td>
-            <td><a href="">详情</a></td>
+            <td>{$vo.product_name}</td>
+            <td>{$vo.order_number}</td>
         </tr>
+        {/volist}
     </table>
+    <div id="page">
+        {$list->render()}
+    </div>
 </div>
 </body>
 </html>

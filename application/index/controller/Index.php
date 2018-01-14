@@ -11,6 +11,7 @@ use app\index\model\Type;
 use think\Controller;
 use think\exception\DbException;
 use think\Paginator;
+use think\Request;
 use think\response\Json;
 
 class Index extends Controller
@@ -56,11 +57,38 @@ class Index extends Controller
 
     public function order()
     {
+        $product = new Product();
+        $list = $product->groupList();
+        $this->assign('list', $list);
         return $this->fetch('order');
     }
 
-    public function todayOrder()
+    public function orderForm()
     {
+        $param = \request()->param();
+
+        dump($param);
+    }
+
+    public function orderAjax()
+    {
+        $order = new OrderDetails();
+        $order_id = date('Ymd', strtotime('+1 day'));
+        $list = $order->getTodayOrder($order_id)->select();
+        return Json::create($list);
+    }
+
+
+    public function todayOrder($pageSize = 50)
+    {
+        $order = new OrderDetails();
+        $order_id = date('Ymd', strtotime('+1 day'));
+        try {
+            $list = $order->getTodayOrder($order_id)->paginate($pageSize, false, ['query' => request()->param()]);
+        } catch (DbException $e) {
+
+        };
+        $this->assign('list', $list);
         return $this->fetch('todayOrder');
     }
 

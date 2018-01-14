@@ -10,7 +10,7 @@ class Order extends Model
 {
     public function getList($where, $pageSize)
     {
-            return $this->where($where)->paginate($pageSize);
+        return $this->where($where)->paginate($pageSize);
     }
 
     /**
@@ -29,5 +29,6 @@ class Order extends Model
         return $this->alias('a')->where($where)->join('xzg_order_details b', 'a.order_id=b.order_id')->join('xzg_product c', 'b.product_id=c.id')->field('b.order_id,b.order_number,c.product_name,c.provider_id');
 
     }
+
 }
 

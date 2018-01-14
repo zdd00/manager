@@ -35,15 +35,23 @@ class Product extends Model
             }
         }
     }
-    public function del($data=''){;
-        if($data!=''){
-            if($this->destroy($data)){
+
+    public function del($data = '')
+    {
+        if ($data != '') {
+            if ($this->destroy($data)) {
                 return Json::create(['status' => 1]);
-            }else{
+            } else {
                 return Json::create(['status' => 2]);
             }
-        }else{
+        } else {
             return Json::create(['status' => 2]);
         }
+    }
+
+    public function groupList()
+    {
+        $list = $this->alias('a')->join('xzg_type b', 'a.type_id=b.id')->join('xzg_provider c', 'a.provider_id=c.id')->field('a.id,a.product_name,a.provider_id,b.type_name,c.provider')->select();
+        return array_group_by($list, 'type_name');
     }
 }
