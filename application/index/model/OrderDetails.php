@@ -12,11 +12,28 @@ use think\Model;
 
 class OrderDetails extends Model
 {
-    public function getTodayOrder($order_id = '')
+    public function getTodayOrder($order_id = '', $userId = '', $provider = '')
     {
-        if ($order_id != '') {
-            return $this->alias('a')->where('a.order_id', $order_id)->join('xzg_product b', 'a.product_id=b.id')->join('xzg_provider c','b.provider_id=c.id')->field('a.order_id,a.order_number,b.product_name,c.provider');
+        $where = [];
+        if ($order_id != '') $where['a.order_id'] = $order_id;
+        if ($userId != '') $where['a.user_id'] = $userId;
+        if ($provider != '') $where['c.id'] = $provider;
+        return $this->alias('a')->where($where)->join('xzg_product b', 'a.product_id=b.id')->join('xzg_provider c', 'b.provider_id=c.id')->field('a.id,a.order_id,a.order_number,b.product_name,c.provider,a.product_id,a.user_id,SUM(a.order_number) sum')->group('a.product_id');
+    }
+
+    public function setOrder($param = [], $order_id = '')
+    {
+        if ($param != []) {
+            $data = [];
+            foreach ($param as $key => $value) {
+                foreach ($value as $i => $item) {
+                    if (!($key == 'id' && $item == '')) {
+                        $data[$i]['order_id'] = $order_id;
+                        $data[$i][$key] = $item;
+                    }
+                }
+            }
+            return $this->saveAll($data);
         }
-        return null;
     }
 }

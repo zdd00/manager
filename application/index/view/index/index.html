@@ -25,15 +25,16 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">订单管理</a></li>
-                <li><a href="/index/product.html">菜品管理</a></li>
-                <li><a href="/index/provider.html">供应人管理</a></li>
+                <li><a href="{:url('product')}">菜品管理</a></li>
+                <li><a href="{:url('provider')}">供应人管理</a></li>
+                <li><a href="{:url('shop')}">店面管理</a></li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <p>
-        <a href="index/todayOrder" class="btn btn-primary">明日订单</a>
+        <a href="{:url('todayOrder')}" class="btn btn-primary">明日订单</a>
     </p>
     <table class="table table-responsive table-bordered table-condensed table-striped">
         <tr>
@@ -45,7 +46,7 @@
         <tr>
             <td>{$vo.order_id}</td>
             <td>{$vo.create_time}</td>
-            <td><a href="index/orderDetails?orderId={$vo.order_id}">详情</a></td>
+            <td><a href="{:url('orderDetails',['orderId'=>$vo.order_id])}">详情</a></td>
         </tr>
         {/volist}
     </table>

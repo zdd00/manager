@@ -66,29 +66,39 @@ class Index extends Controller
     public function orderForm()
     {
         $param = \request()->param();
-
-        dump($param);
+        $order_id = date('Ymd', strtotime('+1 day'));
+        $order = new Order();
+        $order->addOrder($order_id);
+        $orderDetails = new OrderDetails();
+        $save = $orderDetails->setOrder($param, $order_id);
+        if ($save) {
+            return $this->success('提交成功', 'todayOrder');
+        } else {
+            return $this->error('提交失败', 'todayOrder');
+        }
     }
 
     public function orderAjax()
     {
-        $order = new OrderDetails();
+        $order_details = new OrderDetails();
         $order_id = date('Ymd', strtotime('+1 day'));
-        $list = $order->getTodayOrder($order_id)->select();
+        $list = $order_details->getTodayOrder($order_id, input('user_id'), '')->select();
         return Json::create($list);
     }
 
 
-    public function todayOrder($pageSize = 50)
+    public function todayOrder($userId = '', $provider = '')
     {
         $order = new OrderDetails();
         $order_id = date('Ymd', strtotime('+1 day'));
-        try {
-            $list = $order->getTodayOrder($order_id)->paginate($pageSize, false, ['query' => request()->param()]);
-        } catch (DbException $e) {
-
-        };
+        $list = $order->getTodayOrder($order_id, $userId, $provider)->select();
         $this->assign('list', $list);
+
+        $admin = Admin::all();
+        $this->assign('admin', $admin);
+
+        $provider = Provider::all();
+        $this->assign('provider', $provider);
         return $this->fetch('todayOrder');
     }
 
@@ -146,6 +156,31 @@ class Index extends Controller
     public function providerDel($data)
     {
         $product = new Provider();
+        return $product->del($data);
+    }
+
+    /**
+     * 供应人管理
+     * @param string $pageSize
+     * @return mixed
+     */
+    public function shop($pageSize = '20')
+    {
+        $product = new Admin();
+        $list = $product->adminList()->paginate($pageSize, false, ['query' => request()->param()]);
+        $this->assign('list', $list);
+        return $this->fetch('shop');
+    }
+
+    public function shopEdit($data)
+    {
+        $product = new Admin();
+        return $product->edit($data);
+    }
+
+    public function shopDel($data)
+    {
+        $product = new Admin();
         return $product->del($data);
     }
 }

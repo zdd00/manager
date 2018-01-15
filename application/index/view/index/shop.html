@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <title>菜品管理</title>
+    <title>供应人管理</title>
     {load href="/static/css/bootstrap.min.css" /}
     {load href="/static/js/jquery.min.js" /}
     {load href="/static/js/layer/mobile/layer.js" /}
@@ -32,63 +32,33 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">菜品管理</a>
+            <a class="navbar-brand" href="#">供应人管理</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="/">订单管理</a></li>
-                <li class="active"><a href="{:url('product')}">菜品管理</a></li>
+                <li><a href="{:url('product')}">菜品管理</a></li>
                 <li><a href="{:url('provider')}">供应人管理</a></li>
-                <li><a href="{:url('shop')}">店面管理</a></li>
+                <li class="active"><a href="{:url('shop')}">店面管理</a></li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <p>
-        <a href="productEdit" class="btn btn-primary add layer">添加</a>
+        <a href="" class="btn btn-primary add layer">添加</a>
     </p>
-    <form id="form" class="form-inline" style="margin-bottom: 10px;">
-        <div class="form-group">
-            <select class="form-control" name="type" title="种类" id="type">
-                <option value="">--种类--</option>
-                {volist name="type" id="vo"}
-                {if condition="$vo['id'] eq $Request.param.type"}
-                <option value="{$vo.id}" selected>{$vo.type_name}</option>
-                {else /}
-                <option value="{$vo.id}">{$vo.type_name}</option>
-                {/if}
-                {/volist}
-            </select>
-        </div>
-        <div class="form-group">
-            <select class="form-control" name="provider" title="选择供货人" id="provider">
-                <option value="">--供货人--</option>
-                {volist name="provider" id="vo"}
-                {if condition="$vo['id'] eq $Request.param.provider"}
-                <option value="{$vo.id}" selected>{$vo.provider}</option>
-                {else /}
-                <option value="{$vo.id}">{$vo.provider}</option>
-                {/if}
-                {/volist}
-            </select>
-        </div>
-    </form>
     <table class="table table-responsive table-bordered table-condensed table-striped">
         <tr>
-            <th>菜名</th>
-            <th>种类</th>
             <th>供应人</th>
             <th>操作</th>
         </tr>
         {volist name="list" id="vo"}
         <tr>
-            <td>{$vo.product_name}</td>
-            <td>{$vo.type_name}</td>
-            <td>{$vo.provider}</td>
+            <td>{$vo.username}</td>
             <td>
-                <a href="{:url('productEdit',['id'=>$vo.id])}" class="layer edit" data-id="{$vo.id}" data-type="{$vo.type_id}"
-                   data-provider="{$vo.provider_id}" data-name="{$vo.product_name}">修改</a>
+                <a href="{:url('productEdit',['id'=>$vo.id])}" class="layer edit" data-id="{$vo.id}"
+                   data-username="{$vo.username}">修改</a>
                 <a href="{:url('productEdit',['id'=>$vo.id])}" class="del" data-id="{$vo.id}">删除</a>
             </td>
         </tr>
@@ -101,26 +71,8 @@
                 <input type="hidden" name="id">
                 <div class="controls">
                     <div class="form-group">
-                        <label>种类</label>
-                        <select class="form-control type1" name="type_id" title="种类">
-                            <option value="">--种类--</option>
-                            {volist name="type" id="vo"}
-                            <option value="{$vo.id}">{$vo.type_name}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>选择供货人</label>
-                        <select class="form-control provider1" name="provider_id" title="选择供货人">
-                            <option value="">--供货人--</option>
-                            {volist name="provider" id="vo"}
-                            <option value="{$vo.id}">{$vo.provider}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="name1">菜名</label>
-                        <input type="text" name="product_name" class="form-control name1" id="name1" placeholder="">
+                        <label for="name1">供应人</label>
+                        <input type="text" name="username" class="form-control name1" id="name1" placeholder="">
                     </div>
                     <button type="button" id="submit" class="btn btn-primary btn-lg btn-block">提交</button>
                 </div>
@@ -147,9 +99,7 @@
         if ($(this).hasClass('edit')) {
             subType = 'edit';
             id = this.dataset.id;
-            $(".type1").find("option[value='" + this.dataset.type + "']").attr("selected", true);
-            $(".provider1").find("option[value='" + this.dataset.provider + "']").attr("selected", true);
-            $('.name1').val(this.dataset.name);
+            $('.name1').val(this.dataset.username);
         } else {
             id = '';
         }
@@ -188,7 +138,7 @@
     }
     function ajaxSubmit(data) {
         $.ajax({
-                    url: 'productEdit',
+                    url: 'shopEdit',
                     dataType: 'json',
                     type: 'post',
                     data: {data: data}
@@ -218,7 +168,7 @@
     }
     function ajaxDel(data) {
         $.ajax({
-                    url: 'productDel',
+                    url: 'shopDel',
                     dataType: 'json',
                     type: 'post',
                     data: {data: data}

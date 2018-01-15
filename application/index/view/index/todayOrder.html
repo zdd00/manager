@@ -7,6 +7,7 @@
     {load href="/static/css/bootstrap.min.css" /}
     {load href="/static/js/jquery.min.js" /}
     {load href="/static/js/bootstrap.min.js" /}
+    {load href="/static/js/layer/mobile/layer.js" /}
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -25,16 +26,49 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">订单管理</a></li>
-                <li><a href="/index/product.html">菜品管理</a></li>
-                <li><a href="/index/provider.html">供应人管理</a></li>
+                <li><a href="{:url('product')}">菜品管理</a></li>
+                <li><a href="{:url('provider')}">供应人管理</a></li>
+                <li><a href="{:url('shop')}">店面管理</a></li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <p>
-        <a href="order" class="btn btn-primary">添加/修改</a>
+        <!--<a href="order" class="btn btn-primary" id="add">添加/修改</a>-->
+        <select class="btn btn-primary" id="select">
+            <option value="">添加/修改</option>
+            {volist name="admin" id="vo"}
+            <option value="{$vo.id}">{$vo.username}</option>
+            {/volist}
+        </select>
     </p>
+    <form id="form" class="form-inline" style="margin-bottom: 10px;">
+        <div class="form-group">
+            <select class="form-control" name="userId" title="选择店" id="userId">
+                <option value="">--选择店--</option>
+                {volist name="admin" id="vo"}
+                {if condition="$vo['id'] eq $Request.param.userId"}
+                <option value="{$vo.id}" selected>{$vo.username}</option>
+                {else /}
+                <option value="{$vo.id}">{$vo.username}</option>
+                {/if}
+                {/volist}
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="provider" title="选择供货人" id="provider">
+                <option value="">--供货人--</option>
+                {volist name="provider" id="vo"}
+                {if condition="$vo['id'] eq $Request.param.provider"}
+                <option value="{$vo.id}" selected>{$vo.provider}</option>
+                {else /}
+                <option value="{$vo.id}">{$vo.provider}</option>
+                {/if}
+                {/volist}
+            </select>
+        </div>
+    </form>
     <table class="table table-responsive table-bordered table-condensed table-striped">
         <tr>
             <th>菜名</th>
@@ -43,13 +77,26 @@
         {volist name="list" id="vo"}
         <tr>
             <td>{$vo.product_name}</td>
-            <td>{$vo.order_number}</td>
+            <td>{$vo.sum}</td>
         </tr>
         {/volist}
     </table>
-    <div id="page">
-        {$list->render()}
-    </div>
 </div>
+<script>
+    $('#userId').on('change', function () {
+        $('#provider').val('');
+        $('#form').submit();
+    });
+    $('#provider').on('change', function () {
+        $('#userId').val('');
+        $('#form').submit();
+    });
+    $('#select').on('change', function () {
+        var val = $('#select').val();
+        if (val != '') {
+            location.href = 'order?user_id=' + $('#select').val();
+        }
+    })
+</script>
 </body>
 </html>

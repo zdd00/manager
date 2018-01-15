@@ -10,7 +10,7 @@ class Order extends Model
 {
     public function getList($where, $pageSize)
     {
-        return $this->where($where)->paginate($pageSize);
+        return $this->where($where)->order('order_id desc')->paginate($pageSize);
     }
 
     /**
@@ -30,5 +30,13 @@ class Order extends Model
 
     }
 
+    public function addOrder($order_id = '')
+    {
+        if (!($this->get(['order_id' => $order_id]))) {
+            return $this->save(['order_id' => $order_id]);
+        } else {
+            return null;
+        }
+    }
 }
 

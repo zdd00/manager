@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-    <title>无标题文档</title>
+    <title>菜单</title>
     {load href="/static/css/order.css" /}
 
 </head>
@@ -35,13 +35,14 @@
                             <button class="minus" type="button">
                                 <strong></strong>
                             </button>
-                            <i>0</i>
+                            <i class="size">0</i>
                             <button class="add" type="button">
                                 <strong></strong>
                             </button>
                             <input class="num" type="hidden" name="order_number[]" value="">
-                            <input type="hidden" name="product_id[]" value="{$v.id}">
-                            <input type="hidden" name="provider_id[]" value="{$v.provider_id}">
+                            <input class="id" type="hidden" name="id[]" value="">
+                            <input class="product" type="hidden" name="product_id[]" value="{$v.id}">
+                            <input type="hidden" name="user_id[]" value="{$Request.param.user_id}">
                             <i class="price">25</i>
                         </div>
                     </div>
@@ -124,11 +125,12 @@
     $('#btnselect').on('click', function () {
 
         var body = $(document.body),
-            form = $("<form method='post'></form>"),
-            input, url = 'orderForm';
+                form = $("<form method='post'></form>"),
+                input, url = 'orderForm';
         form.attr({"action": url});
         $('.menu-txt').each(function (index, val) {
-            if ($(val).find('.num').val()) {
+            var num = $(val).find('.num').val();
+            if (num && num > 0) {
                 $(val).find('input').each(function (key, value) {
                     input = $("<input type='hidden'>");
                     input.attr({"name": $(value).attr('name')});
@@ -141,8 +143,34 @@
 
         form.submit();
         document.body.removeChild(form[0]);
-    })
-</script>
+    });
 
+    restoreOrder();
+    //还原订单
+    function restoreOrder() {
+        var url = "{:url('orderAjax')}";
+        $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    data: {
+                        user_id: '{$Request.param.user_id}'
+                    }
+                })
+                .done(function (data) {
+                    $.each(data, function (index, val) {
+                        var product = $('.product[value=' + val.product_id + ']');
+                        var parents = product.closest('.btn');
+                        parents.find('.size').css('display', 'inline-block').text(val.order_number);
+                        parents.find('.num').val(val.order_number);
+                        parents.find('.id').val(val.id);
+                        parents.find('.minus').css('display', 'inline-block');
+                    });
+                })
+                .fail(function () {
+                    alert('错误,联系管理员');
+                });
+
+    }
+</script>
 </body>
 </html>
