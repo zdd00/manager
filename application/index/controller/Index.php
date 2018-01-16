@@ -41,7 +41,7 @@ class Index extends Controller
      * @throws \think\exception\DbException
      * @internal param null $user_id 用户id
      */
-    public function orderDetails($orderId = '', $pageSize = 5, $userId = '', $provider = '')
+    public function orderDetails($orderId = '', $pageSize = 50, $userId = '', $provider = '')
     {
         $order = new Order();
         $list = $order->orderList($orderId, $userId, $provider)->paginate($pageSize, false, ['query' => request()->param()]);
