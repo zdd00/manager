@@ -78,12 +78,27 @@ class Index extends Controller
         }
     }
 
+
     public function orderAjax()
     {
         $order_details = new OrderDetails();
         $order_id = date('Ymd', strtotime('+1 day'));
         $list = $order_details->getTodayOrder($order_id, input('user_id'), '')->select();
         return Json::create($list);
+    }
+
+    public function orderDrop($product_id = '',$user_id='')
+    {
+        if ($product_id !== ''&&$user_id !== '') {
+            $order_id = date('Ymd', strtotime('+1 day'));
+            $order = new OrderDetails();
+            $del = $order->dropOrder($order_id,$product_id,$user_id)->delete();
+            if ($del) {
+                return Json::create(['status' => 1]);
+            } else {
+                return Json::create(['status' => 0]);
+            }
+        }
     }
 
 

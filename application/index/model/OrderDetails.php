@@ -9,6 +9,7 @@
 namespace app\index\model;
 
 use think\Model;
+use think\response\Json;
 
 class OrderDetails extends Model
 {
@@ -34,6 +35,15 @@ class OrderDetails extends Model
                 }
             }
             return $this->saveAll($data);
+        }
+    }
+
+    public function dropOrder($order_id = '', $product_id = '',$user_id='')
+    {
+        if ($order_id != '' && $product_id != '') {
+            return $this->where(['order_id' => $order_id, 'product_id' => $product_id,'user_id'=>$user_id]);
+        }else{
+            return false;
         }
     }
 }
